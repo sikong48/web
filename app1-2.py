@@ -36,7 +36,7 @@ class Response:
 
 def application(environ, start_response):
     request = Request(environ)
-    name = request.params.get('name', ['anont'])[0]
+    name = request.params.get('name', ['anon'])[0]
     body = 'hello {}'.format(escape(name))
     return Response(body)(start_response)
 
