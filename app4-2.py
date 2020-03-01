@@ -30,10 +30,9 @@ class Application:
 
     @wsgify
     def __call__(self, request):
-        for route in self.routers:
-            for rule, handler in self.routers:
-                if re.match(rule, request.path):
-                    return handler(request)
+        for rule, handler in self.routers:
+            if re.match(rule, request.path):
+                return handler(request)
 
 
 application = Application()
@@ -52,6 +51,8 @@ def favicon(request):
 @application.route(r'/')
 def main(request):
     return Response("this is a man page")
+
+print(application.routers)
 
 
 if __name__ == '__main__':
