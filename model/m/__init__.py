@@ -108,6 +108,7 @@ class Application:
     @wsgify
     def __call__(self, request):
         for router in self.routers:
+            print('adfasdffasdf')
             handler = router.match(request)
             if handler:
                 return handler(self, request)
