@@ -93,13 +93,17 @@ class Router:
                 if request.method in route.methods:
                     m = route.rule.match(request.path.replace(self.prefix, '', 1))
                     if m:
-                        request.args = m.groupdict()
+                        request.args = {}
+                        for k, v in m.groupdict().items():
+                            request.args[k] = route.casts[k][v]
                         return route.handler
 
 
 class Application:
-    def __init__(self, **options):
-        self.routers = []
+    def __init__(self, routers=None, **options):
+        if routers is None:
+            routers = []
+        self.routers = routers
         self.options = options
 
     def add_router(self, router):
